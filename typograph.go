@@ -1,4 +1,4 @@
-package main
+package typograph
 
 type Typograph struct {
 }

@@ -1,4 +1,4 @@
-package main
+package typograph
 
 import (
 	"regexp"
