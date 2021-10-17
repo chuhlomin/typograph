@@ -5,26 +5,28 @@ import (
 	"strings"
 )
 
+type Symbols struct {
+}
+
 // Symbols
 // -> → →, <- → ←
 // (c) → ©, (tm) → ™, (r) → ®
 // Adding ° to C and F
-func Symbols(in string) (out string) {
+func (symbols *Symbols) Process(in []byte) []byte {
 	r := strings.NewReplacer(
 		"->", "→", "<-", "←",
 		"(r)", "®", "(R)", "®",
 	)
-	in = r.Replace(in)
+	in = []byte(r.Replace(string(in)))
 
-	b := []byte(in)
 	copyRegexp := regexp.MustCompile(`(?i)(copyright )?\((c|с)\)`)
-	b = copyRegexp.ReplaceAll(b, []byte(`©`))
+	in = copyRegexp.ReplaceAll(in, []byte(`©`))
 
 	tmRegexp := regexp.MustCompile(`(?i)(\(tm\))`)
-	b = tmRegexp.ReplaceAll(b, []byte(`™`))
+	in = tmRegexp.ReplaceAll(in, []byte(`™`))
 
 	cfRegexp := regexp.MustCompile(`(^|\s*[+-≈±−—–]*)(\d+[.,\d]*?) (C|F)([\W\s.,:!?"]+|$)`)
-	b = cfRegexp.ReplaceAll(b, []byte(`$1$2 °$3$4`))
+	in = cfRegexp.ReplaceAll(in, []byte(`$1$2 °$3$4`))
 
-	return string(b)
+	return in
 }

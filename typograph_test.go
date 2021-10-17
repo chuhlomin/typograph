@@ -11,12 +11,14 @@ func TestTypograph(t *testing.T) {
 		name, in, out string
 	}{
 		{"symbols", "10(tm) -> 30 C", "10™ → 30 °C"},
+		{"space", "One,two.Three", "One, two. Three"},
+		{"nbsp", "Me, me again and Irene", "Me, me\u00a0again and Irene"},
 	}
 
 	typograph := NewTypograph()
 
 	for _, test := range tests {
-		actual := typograph.Process(test.in)
-		require.Equal(t, test.out, actual, test.name)
+		actual := typograph.Process([]byte(test.in))
+		require.Equal(t, test.out, string(actual), test.name)
 	}
 }

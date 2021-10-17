@@ -8,44 +8,45 @@ import (
 
 func TestSymbols(t *testing.T) {
 	tests := []struct {
-		input    string
-		expected string
+		in  string
+		out string
 	}{
-		// arrows
-		{input: "->", expected: "→"},
-		{input: "<-", expected: "←"},
-		{input: "20 + 10 -> 30", expected: "20 + 10 → 30"},
-		{input: "20 + 10 <- 30", expected: "20 + 10 ← 30"},
+		{"->", "→"},
+		{"<-", "←"},
+		{"20 + 10 -> 30", "20 + 10 → 30"},
+		{"20 + 10 <- 30", "20 + 10 ← 30"},
 		// copy
-		{input: "(c)", expected: "©"},
-		{input: "(с)", expected: "©"},
-		{input: "Copyright (с)", expected: "©"},
-		{input: "copyright (с)", expected: "©"},
-		{input: "(r)", expected: "®"},
+		{"(c)", "©"},
+		{"(с)", "©"},
+		{"Copyright (с)", "©"},
+		{"copyright (с)", "©"},
+		{"(r)", "®"},
 		// tm
-		{input: "(tm)", expected: "™"},
+		{"(tm)", "™"},
 		// cf
-		{input: " 200 C", expected: " 200 °C"},
-		{input: "200 C", expected: "200 °C"},
-		{input: "&minus;20 C", expected: "&minus;20 °C"},
-		{input: "-20 C", expected: "-20 °C"},
-		{input: "+10 C", expected: "+10 °C"},
-		{input: "±2,4 C", expected: "±2,4 °C"},
-		{input: "+1.5 C", expected: "+1.5 °C"},
-		{input: "1,5 C", expected: "1,5 °C"},
-		{input: "≈99 C", expected: "≈99 °C"},
-		{input: "B2C", expected: "B2C"},
-		{input: " 200 C.", expected: " 200 °C."},
-		{input: " 20d C", expected: " 20d C"},
-		{input: " 20 C1", expected: " 20 C1"},
-		{input: " 200 F", expected: " 200 °F"},
-		{input: "200 F", expected: "200 °F"},
-		{input: "200 C\n 300 F", expected: "200 °C\n 300 °F"},
-		{input: "200 C\n300 F", expected: "200 °C\n300 °F"},
+		{" 200 C", " 200 °C"},
+		{"200 C", "200 °C"},
+		{"&minus;20 C", "&minus;20 °C"},
+		{"-20 C", "-20 °C"},
+		{"+10 C", "+10 °C"},
+		{"±2,4 C", "±2,4 °C"},
+		{"+1.5 C", "+1.5 °C"},
+		{"1,5 C", "1,5 °C"},
+		{"≈99 C", "≈99 °C"},
+		{"B2C", "B2C"},
+		{" 200 C.", " 200 °C."},
+		{" 20d C", " 20d C"},
+		{" 20 C1", " 20 C1"},
+		{" 200 F", " 200 °F"},
+		{"200 F", "200 °F"},
+		{"200 C\n 300 F", "200 °C\n 300 °F"},
+		{"200 C\n300 F", "200 °C\n300 °F"},
 	}
 
+	s := Symbols{}
+
 	for _, test := range tests {
-		actual := Symbols(test.input)
-		require.Equal(t, test.expected, actual)
+		actual := s.Process([]byte(test.in))
+		require.Equal(t, test.out, string(actual))
 	}
 }
