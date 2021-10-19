@@ -43,6 +43,10 @@ func TestSpace(t *testing.T) {
 			"‹I!›",
 			"‹I!›",
 		},
+		{
+			"https://tools.ietf.org/html/rfc7208",
+			"https://tools.ietf.org/html/rfc7208",
+		},
 	}
 
 	s := Space{}
