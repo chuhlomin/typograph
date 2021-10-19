@@ -47,6 +47,10 @@ func TestSpace(t *testing.T) {
 			"https://tools.ietf.org/html/rfc7208",
 			"https://tools.ietf.org/html/rfc7208",
 		},
+		{
+			"![Title](path.png \"Title\")",
+			"![Title](path.png \"Title\")",
+		},
 	}
 
 	s := Space{}
